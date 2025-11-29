@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+<h:head>
+    <title>Historial de Movimientos</title>
+    <style>
+        .historial-table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 1rem;
+            font-family: Arial, sans-serif;
+        }
+        .historial-table th, .historial-table td {
+            border: 1px solid #ccc;
+            padding: 8px 10px;
+            text-align: left;
+            font-size: 14px;
+        }
+        .historial-table th {
+            background: #f2f2f2;
+            font-weight: bold;
+        }
+        .center {
+            text-align: center;
+        }
+        .btn-retornar {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background: #1976D2;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 15px;
+        }
+        .btn-retornar:hover {
+            background: #0F5AA3;
+        }
+    </style>
+</h:head>
+
+<h:body>
+
+    <h1>Historial de Movimientos de Inventario</h1>
+
+    <h:form id="formHistorial">
+
+        <table class="historial-table">
+            <thead>
+                <tr>
+                    <th>ID Historial</th>
+                    <th>ID Movimiento</th>
+                    <th>Tipo de Acción</th>
+                    <th>Fecha</th>
+                    <th>Usuario Responsable</th>
+                    <th class="center">Opciones</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <ui:repeat value="#{historialBean.listaHistorial}" var="item">
+                    <tr>
+                        <td>#{item.idHistorial}</td>
+                        <td>#{item.idMovimiento}</td>
+                        <td>#{item.accion}</td>
+                        <td>
+                            <h:outputText value="#{item.fechaccion}">
+                                <f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss"/>
+                            </h:outputText>
+                        </td>
+                        <td>#{item.usuarioResponsable}</td>
+                        <td class="center">
+                            <h:commandLink value="Ver Detalle"
+                                           action="#{historialBean.verDetalle(item.idMovimiento)}"/>
+                        </td>
+                    </tr>
+                </ui:repeat>
+
+                <ui:fragment rendered="#{empty historialBean.listaHistorial}">
+                    <tr>
+                        <td colspan="6" class="center">
+                            No hay movimientos registrados.
+                        </td>
+                    </tr>
+                </ui:fragment>
+            </tbody>
+        </table>
+
+        <!-- ✔ BOTÓN DE RETORNO A registro.jsp -->
+        <div class="center">
+            <h:commandButton value="Retornar a Registro"
+                             styleClass="btn-retornar"
+                             onclick="window.location='registro.jsp'; return false;" />
+             <button type="button"
+            style="margin-top:20px; padding:10px 20px; background:#1976D2; 
+                   color:white; border:none; border-radius:4px; font-size:15px; cursor:pointer;"
+            onclick="window.location='registro.jsp'">
+        Retornar a Registro
+    </button>
+        </div>
+
+        <!-- Alternativa: si en vez de JSP usas navegación JSF directa:
+        <div class="center">
+            <h:link outcome="registro" value="Retornar a Registro" styleClass="btn-retornar"/>
+        </div>
+        -->
+
+    </h:form>
+
+</h:body>
+</html>

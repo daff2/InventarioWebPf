@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<h:head>
+    <title>Detalle del Movimiento</title>
+</h:head>
+
+<h:body>
+
+    <h1>Detalle del Movimiento de Inventario</h1>
+
+    <h:panelGrid columns="2" cellpadding="5">
+
+        <h:outputLabel value="ID Movimiento:"/>
+        <h:outputText value="#{detalleHistorialBean.mov.idMovimiento}"/>
+
+        <h:outputLabel value="Acción Realizada:"/>
+        <h:outputText value="#{detalleHistorialBean.mov.accion}"/>
+
+        <h:outputLabel value="Fecha:"/>
+        <h:outputText value="#{detalleHistorialBean.mov.fechaccion}">
+            <f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss"/>
+        </h:outputText>
+
+        <h:outputLabel value="Usuario Responsable:"/>
+        <h:outputText value="#{detalleHistorialBean.mov.usuarioResponsable}"/>
+
+        <h:outputLabel value="Productos Involucrados:"/>
+        <h:dataTable value="#{detalleHistorialBean.productos}" var="p" border="1">
+            <h:column>
+                <f:facet name="header">Producto</f:facet>
+                #{p.nombre}
+            </h:column>
+
+            <h:column>
+                <f:facet name="header">Cantidad</f:facet>
+                #{p.cantidad}
+            </h:column>
+        </h:dataTable>
+
+    </h:panelGrid>
+
+    <br/>
+    <h:link value="Volver al Historial" outcome="historialMovimiento.xhtml"/>
+
+</h:body>
+</html>
